@@ -13,6 +13,7 @@ GameScene::~GameScene() {
 	delete block_;
 	delete player_;
 	delete debugCamera_;
+	delete modelSkydome_;
 
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
@@ -36,6 +37,7 @@ void GameScene::Initialize() {
 	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
 	model_ = Model::Create();
 	block_ = Model::CreateFromOBJ("cube");
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 	worldTransform_.Initialize();
 
 	viewProjection_.Initialize();
@@ -152,6 +154,7 @@ void GameScene::Draw() {
 		}
 	}
 
+	modelSkydome_->Draw(worldTransform_, viewProjection_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

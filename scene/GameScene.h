@@ -60,11 +60,13 @@ private: // メンバ変数
 	uint32_t textureHandle_ = 0;
 	uint32_t textureHandle_3d = 0;
 	uint32_t block_3d = 0;
+	uint32_t Skydome_3d = 0;
 	//スプライト
 	Sprite* sprite_ = nullptr;
 	Model* model_ = nullptr;
 	Model* block_ = nullptr;
 	Player* player_ = nullptr;
+	Model* modelSkydome_ = nullptr;
 
 	std::vector<std::vector<WorldTransform*>> worldTransformBlocks_;
 
