@@ -47,7 +47,7 @@ void GameScene::Initialize() {
 	player_->Initialize(model_, textureHandle_, &viewProjection_);
 
 	mapChipField_ = new MapChipField();
-	mapChipField_->LoadMapChipCsv("Resouces/blocks.csv");
+	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 	GenerateBlocks();
 
 
@@ -77,13 +77,11 @@ void GameScene::GenerateBlocks()
 				worldTransformBlocks_[i][j] = worldTransform;
 				worldTransformBlocks_[i][j]->translation_ = mapChipField_->GetMapChipPositionByIndex(j, i);
 			}
-			else {
-				worldTransformBlocks_[i][j] = nullptr; // 配置しない場所にはnullptrを設定
-			}
+
 		}
 	}
-
 }
+
 
 void GameScene::Update() {
 
