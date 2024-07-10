@@ -14,6 +14,7 @@ GameScene::~GameScene() {
 	delete player_;
 	delete debugCamera_;
 	delete modelSkydome_;
+	delete mapChipField_;
 
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
@@ -45,34 +46,43 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	player_->Initialize(model_, textureHandle_, &viewProjection_);
 
+	mapChipField_ = new MapChipField();
+	mapChipField_->LoadMapChipCsv("Resouces/blocks.csv");
+	GenerateBlocks();
+
+
+	
+}
+
+void GameScene::GenerateBlocks()
+{
+
 	//要素数
-	const uint32_t kNumBlockVirtical = 20;
-	const uint32_t kNumBlockHorizontal = 10;
-	//ブロック1個分の横幅
-	const float kBlockWidth = 2.0f;
-	const float kBlockHeight = 2.0f;
+	const uint32_t numBlockVirtical = mapChipField_->GetNumBlockVirtical();
+	const uint32_t numBlockHorizontal = mapChipField_->GetNumBlockHorizontal();
+
 	//要素数を変更する
-	worldTransformBlocks_.resize(kNumBlockVirtical);
-	for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
-		worldTransformBlocks_[i].resize(kNumBlockHorizontal);
+	worldTransformBlocks_.resize(numBlockVirtical);
+	for (uint32_t i = 0; i < numBlockVirtical; ++i) {
+		worldTransformBlocks_[i].resize(numBlockHorizontal);
 	}
-
 	//キューブの生成
-	for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
+	for (uint32_t i = 0; i < numBlockVirtical; ++i) {
 
-		for (uint32_t j = 0; j < kNumBlockHorizontal; ++j) {
+		for (uint32_t j = 0; j < numBlockHorizontal; ++j) {
 
-			if ((i + j) % 2 == 0) {
-				worldTransformBlocks_[i][j] = new WorldTransform();
-				worldTransformBlocks_[i][j]->Initialize();
-				worldTransformBlocks_[i][j]->translation_.x = kBlockWidth * i;
-				worldTransformBlocks_[i][j]->translation_.y = kBlockHeight * j;
+			if (mapChipField_->GetMapChipTypeByIndex(j, i) == MapChipType::kBlock) {
+				WorldTransform* worldTransform = new WorldTransform();
+				worldTransform->Initialize();
+				worldTransformBlocks_[i][j] = worldTransform;
+				worldTransformBlocks_[i][j]->translation_ = mapChipField_->GetMapChipPositionByIndex(j, i);
 			}
 			else {
 				worldTransformBlocks_[i][j] = nullptr; // 配置しない場所にはnullptrを設定
 			}
 		}
 	}
+
 }
 
 void GameScene::Update() {

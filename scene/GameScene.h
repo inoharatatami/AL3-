@@ -10,6 +10,9 @@
 #include "Player.h"
 #include<vector>
 #include"DebugCamera.h"
+#include "MapChipField.h"
+
+
 
 /// <summary>
 /// ゲームシーン
@@ -35,6 +38,7 @@ public: // メンバ関数
 	/// 初期化
 	/// </summary>
 	void Initialize();
+	void GenerateBlocks();
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -67,6 +71,8 @@ private: // メンバ変数
 	Model* block_ = nullptr;
 	Player* player_ = nullptr;
 	Model* modelSkydome_ = nullptr;
+	//マップチップフィールド
+	MapChipField* mapChipField_;
 
 	std::vector<std::vector<WorldTransform*>> worldTransformBlocks_;
 
