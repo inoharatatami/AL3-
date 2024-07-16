@@ -33,11 +33,11 @@ void GameScene::Initialize() {
 
 	textureHandle_ = TextureManager::Load("ranatatie.png");
 	textureHandle_3d = TextureManager::Load("ranatatie.png");
-	//block_3d = TextureManager::Load("cube/cube.jpg");
+	//block_3d = TextureManager::Load("cube/block.png");
 	//スプライトの生成
 	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
 	model_ = Model::Create();
-	block_ = Model::CreateFromOBJ("cube");
+	block_ = Model::CreateFromOBJ("block", true);
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 	worldTransform_.Initialize();
 
