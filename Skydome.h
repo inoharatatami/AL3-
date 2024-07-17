@@ -15,4 +15,5 @@ private:
 	uint32_t Skydome_3d_ = 0;
 
 	ViewProjection* viewProjection_ = nullptr;
+	Vector3 velocity_ = {};
 };

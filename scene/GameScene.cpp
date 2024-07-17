@@ -43,14 +43,15 @@ void GameScene::Initialize() {
 
 	viewProjection_.Initialize();
 
-	player_ = new Player();
-	player_->Initialize(model_, textureHandle_, &viewProjection_);
+	
 
 	mapChipField_ = new MapChipField();
 	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 	GenerateBlocks();
 
-
+	player_ = new Player();
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1, 20);
+	player_->Initialize(model_, textureHandle_, &viewProjection_, playerPosition);
 	
 }
 
@@ -125,7 +126,7 @@ void GameScene::Update() {
 void GameScene::Draw() {
 
 
-
+	
 
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
@@ -152,7 +153,7 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 
-	//model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
@@ -161,6 +162,8 @@ void GameScene::Draw() {
 			block_->Draw(*worldTransformBlock, viewProjection_);
 		}
 	}
+
+	player_->Draw();
 
 	modelSkydome_->Draw(worldTransform_, viewProjection_);
 	// 3Dオブジェクト描画後処理
