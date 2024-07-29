@@ -36,10 +36,13 @@ void GameScene::Initialize() {
 	//block_3d = TextureManager::Load("cube/block.png");
 	//スプライトの生成
 	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
-	model_ = Model::Create();
+	model_ = Model::CreateFromOBJ("player",true);
 	block_ = Model::CreateFromOBJ("block", true);
+
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 	worldTransform_.Initialize();
+
+	viewProjection_.translation_.z = -10;
 
 	viewProjection_.Initialize();
 
@@ -50,7 +53,7 @@ void GameScene::Initialize() {
 	GenerateBlocks();
 
 	player_ = new Player();
-	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1, 20);
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(2, 18);
 	player_->Initialize(model_, textureHandle_, &viewProjection_, playerPosition);
 	
 }

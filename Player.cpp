@@ -3,6 +3,7 @@
 #include<numbers>
 #include"MathUtilityForText.h"
 #include"Input.h"
+#include"algorithm"
 
 
 
@@ -28,20 +29,29 @@ void Player::Update()
 	 //左右加速
 		Vector3 acceleration = {};
 		if(Input::GetInstance() -> PushKey(DIK_D)){
+			if(velocity_.x < 0.0f){
+				velocity_.x *= (1.0f - kAttenuation);
+			}
 			acceleration.x += kAcceleration;
 		}else if(Input::GetInstance()->PushKey(DIK_A)){
+			if (velocity_.x > 0.0f) {
+				velocity_.x *= (1.0f - kAttenuation);
+			}
 			acceleration.x -= kAcceleration;
 		}
 		velocity_ += acceleration;
-	}
+		velocity_.x = std::clamp(velocity_.x, -kLimitRunSpeed, kLimitRunSpeed);
+	}else{
+			velocity_.x *= (1.0f - kAttenuation);
+		}
 	//移動
 	worldTransform_.translation_ += velocity_;
 	//行列計算
 	worldTransform_.UpdateMatrix();
 }
-void Player::Draw(WorldTransform worldTransform, ViewProjection* viewProjection, uint32_t textureHandle)
+void Player::Draw()
 {
-	model_->Draw(worldTransform, *viewProjection, textureHandle);
+	model_->Draw(worldTransform_, *viewProjection_);
 }
 
 

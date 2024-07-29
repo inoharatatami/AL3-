@@ -9,7 +9,7 @@ class Player {
 public:
     void Initialize(Model* model, uint32_t textureHandle_, ViewProjection* viewProjection_, const Vector3& position);
     void Update();
-    void Draw(WorldTransform worldTransform_, ViewProjection* viewProjection_, uint32_t textureHandle_);
+    void Draw();
 private:
     //ワールド変換データ
     WorldTransform worldTransform_;
@@ -21,6 +21,8 @@ private:
     ViewProjection* viewProjection_ = nullptr;
 
     Vector3 velocity_ = {};
-    static inline const float kAcceleration = 1;
+    static inline const float kAcceleration = 0.01f;
+    static inline const float kAttenuation = 0.03f;
+    static inline const float kLimitRunSpeed = 0.5f;
 };
 
