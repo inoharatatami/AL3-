@@ -10,7 +10,14 @@ public:
     void Initialize(Model* model, uint32_t textureHandle_, ViewProjection* viewProjection_, const Vector3& position);
     void Update();
     void Draw();
+
+    enum class LRDirection{
+     kRight,
+     kLeft,
+    };
+
 private:
+    LRDirection lrDirection_ = LRDirection::kRight;
     //ワールド変換データ
     WorldTransform worldTransform_;
     //モデル
